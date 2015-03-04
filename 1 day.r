@@ -1,0 +1,253 @@
+require(fpp)
+require(xts)
+setwd("R:/projects/1 day thing")
+################################################################################
+################################################################################
+# 1, TIME SERIES IN R
+################################################################################
+
+################################################################################
+# READ DATA AND CREATE TIME SERIES OBJECT
+
+# read data
+load.df <- read.csv('AntiguaLoad.csv',header=TRUE,stringsAsFactors=FALSE)
+# rename columns
+names(load.df) <- c('time', 'load.kWh')
+
+# convert kWh into MWh
+load.df$load.MWh <- load.df$load.kWh/1000
+
+# print head and tail of data frame
+head(load.df)
+tail(load.df)
+
+# convert timestamp to date-time object
+time.vec <- strptime(load.df$time, '%m/%d/%y %H:%M', tz='GMT')
+
+# convert data to a time series using xts
+load.xts <- xts(load.df$load.MWh, order.by=time.vec)
+
+# print time series
+head(load.xts)
+head(time(load.xts))
+
+# plot time series
+plot(load.xts, ylab='MWh', main='30-min Antigua load')
+################################################################################
+
+################################################################################
+# AGGREGATE TIME SERIES AND CONVERT TO ts OBJECT
+
+# extract hourly endpoint and aggregate load by hour using period.apply
+hours.endpoints <- endpoints(load.xts, on='hours')
+load.hourly.xts <- period.apply(load.xts, INDEX=hours.endpoints, FUN=sum)
+
+# print and plot hourly time series
+head(load.hourly.xts)
+plot(load.hourly.xts, ylab='MWh', main='Hourly Antigua load')
+
+# aggregate load by day using apply.daily
+load.daily.xts <- apply.daily(load.xts, sum)
+
+# print and plot daily time series
+head(load.daily.xts)
+plot(load.daily.xts, ylab='MWh', main='Daily Antigua load')
+
+# see also apply.weekly, apply.monthly, apply.quaterly, apply.yearly
+
+# convert from xts to ts for more convenience when forecasting)
+load.hourly <- ts(load.hourly.xts, frequency=24)
+load.daily <- ts(load.daily.xts, frequency=7)
+
+# we will work with the daily time series
+################################################################################
+
+
+################################################################################
+################################################################################
+# 2. SIMPLE FORECASTING METHODS
+################################################################################
+
+################################################################################
+# keep first 25 weeks of the year
+load.daily2 <- window(load.daily,  start=c(1, 1),  end=c(25,7))
+
+# forecast the following 3 weeks using the four simple methods
+load.fit1 <- meanf(load.daily2, h=21)
+load.fit2 <- naive(load.daily2, h=21)
+load.fit3 <- snaive(load.daily2, h=21)
+load.fit4 <- rwf(load.daily2, drift=TRUE, h=21)
+
+# plot them
+plot(load.daily2, main='Forecasts for daily Antigua load', 
+     xlab='2011 Weeks', ylab='MWh', xlim=c(0, 29))
+lines(load.fit1$mean, lwd=2, col=2)
+lines(load.fit2$mean, lwd=2, col=3)
+lines(load.fit3$mean, lwd=2, col=4)
+lines(load.fit4$mean, lwd=2, col=5)
+legend("topleft", lty=1, lwd=2, col=c(2,3,4,5),
+       legend=c('Mean', 'Naive', 'Seasonal Naive', 'Drift'))
+################################################################################
+
+
+################################################################################
+################################################################################
+# 3. MEASURING FORECAST ACCURACY
+################################################################################
+
+################################################################################
+# plot the rolling naive forecast
+naive.forecast <- lag(load.daily2, -1)
+plot(load.daily2, main='Rolling naive forecast for daily Antigua load', 
+     xlab='2011 Weeks', ylab='MWh', xlim=c(0, 26), lwd=2)
+lines(naive.forecast, col=2, lwd=2)
+legend("topleft", lty=1, lwd=2, col=c(1,2),
+       legend=c('Observed', 'Naive forecast'))
+
+# plot the residuals of the rolling naive forecast
+naive.residual <- load.daily2 - naive.forecast
+plot(naive.residual, main='Naive forecast residual for daily Antigua load',
+     xlab='2011 Weeks', ylab='MWh', lwd=2)
+
+# see distribution of residuals. are they normally distributed?
+hist(naive.residual, breaks=20, freq=FALSE)
+
+
+# replot simple forecasting methods together with the "future" observations
+plot(load.daily, main='Forecasts for daily Antigua load', 
+     xlab='2011 Weeks', ylab='MWh', xlim=c(0, 28))
+lines(load.fit1$mean, lwd=2, col=2)
+lines(load.fit2$mean, lwd=2, col=3)
+lines(load.fit3$mean, lwd=2, col=4)
+lines(load.fit4$mean, lwd=2, col=5)
+legend("topleft", lty=1, lwd=2, col=c(2,3,4,5),
+       legend=c('Mean', 'Naive', 'Seasonal Naive', 'Drift'))
+
+# measure forecast accuracy for each method
+accuracy(load.fit1, load.daily)
+accuracy(load.fit2, load.daily)
+accuracy(load.fit3, load.daily)
+accuracy(load.fit4, load.daily)
+################################################################################
+
+################################################################################
+################################################################################
+# 4. SEASONALITY AND STATIONARITY
+################################################################################
+
+################################################################################
+# A. 
+
+# create a vector of day labels
+day.labels <- substr(weekdays(time(load.daily.xts[1:7])), 0, 3)
+
+# seasonplot
+seasonplot(load.daily2, xlab='Day', ylab='MWh',
+           main='Seasonal plot: daily Antigua load', season.labels=day.labels,
+           year.labels=TRUE, year.labels.left=TRUE, col=1:8)
+
+
+# monthplot
+monthplot(load.daily2, xlab='Day', ylab='MWh',
+          main='Seasonal plot: daily Antigua load',
+          labels=day.labels)
+################################################################################
+
+################################################################################
+#B.
+
+# correlogram
+Acf(load.daily2, main='Correlogram of daily Antigua load')
+
+# seasonal differenciation of time series
+load.daily.sdiff <- diff(load.daily2, lag=7)
+plot(load.daily.sdiff, xlab='2011 Week', ylab='MWh',
+     main='Seasonally differentiated daily Antigua load')
+Acf(load.daily.sdiff, main='Correlogram of seasonal diff. daily Antigua load')
+
+# rate of change of seasonal difference
+load.daily.sdiff.diff <- diff(load.daily.sdiff, lag=1)
+plot(load.daily.sdiff.diff, xlab='2011 Week', ylab='MWh',
+     main='Rate of change of seasonal difference')
+Acf(load.daily.sdiff.diff, 
+    main='Correlogram of rate of change of seasonal difference')
+################################################################################
+
+################################################################################
+################################################################################
+# 5. ARIMA forecasting
+################################################################################
+
+################################################################################
+# A.
+
+# correlogram of seasonally differentiated time series
+tsdisplay(load.daily.sdiff)
+
+# ACF could be sinusoidal
+# significant spike at lag 1 in PAC
+# let's try non-seasonal ARIMA(0,0,1)
+arima.fit <- Arima(load.daily.sdiff, order=c(0,1,1))
+# plot ACF of residuals
+tsdisplay(residuals(arima.fit))
+# seasonality not captured (expected, as we are using non-seasonal arima)
+
+# automatic selection of ARIMA model
+arima.auto.fit <- auto.arima(load.daily.sdiff, seasonal=FALSE,
+                             stepwise=FALSE, approximation=FALSE)
+# plot ACF of residuals
+tsdisplay(residuals(arima.auto.fit))
+# again, seasonality not captured
+
+# which one is best?
+arima.fit
+arima.auto.fit
+################################################################################
+
+################################################################################
+# B
+# correlogram of residuals of arima.auto.fit = ARIMA(4,0,1)
+tsdisplay(residuals(arima.auto.fit))
+
+# PACF could be exponentially decaying in lags multiple of 7
+# ACF spikes at lag 7, but not 14, 21, ...
+# try seasonal ARIMA(4,0,1)(0,1,1)[7]
+sarima.fit <- Arima(load.daily2, order=c(4,0,1), seasonal=c(0,1,1))
+# plot ACF of residuals
+tsdisplay(residuals(sarima.fit))
+# Residuals look fine and we could use this model to forecast
+
+# automatic selection or ARIMA model
+# we specify d=0, and D=1
+sarima.auto.fit <- auto.arima(load.daily2, d=0, D=1, stepwise=FALSE,
+                              approximation=FALSE)
+# plot ACF of residuals
+tsdisplay(residuals(sarima.auto.fit))
+# Residuals also look fine and we coul use this model to forecast
+
+# which one is best?
+sarima.fit
+sarima.auto.fit
+
+# forecast next 3 weeks using our fit and plot against observed data
+sarima.fcst <- forecast(sarima.fit, h=21)
+plot(sarima.fcst)
+lines(window(load.daily, start=c(26,1), end=c(28,7)), col='red')
+
+################################################################################
+
+################################################################################
+################################################################################
+# EXERCISE
+################################################################################
+
+################################################################################
+# 1. How good is our forecast of weeks 26-28 made at week 25?
+# 2. How good is the forecast of the automatic SARIMA model for the same period?
+# 3. Compute the out-of-sample accuracy of both models using a rolling 
+#    forecast of 1 week, i.e. for weeks k = 25, 26, ..., 51, use information 
+#    up to week k to  refit the ARIMA models (without changing their orders) and
+#    forecast the load of week k+1.
+# 4. Which model is best?
+################################################################################
+

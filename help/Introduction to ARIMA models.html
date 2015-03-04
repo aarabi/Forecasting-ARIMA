@@ -1,0 +1,1409 @@
+
+<!-- saved from url=(0044)http://people.duke.edu/~rnau/411arim.htm#pdq -->
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="ProgId" content="Word.Document">
+<meta name="Generator" content="Microsoft Word 14">
+<meta name="Originator" content="Microsoft Word 14">
+<link rel="File-List" href="http://people.duke.edu/~rnau/411arim_files/filelist.xml">
+<link rel="Edit-Time-Data" href="http://people.duke.edu/~rnau/411arim_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Introduction to ARIMA models</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Bob Nau</o:Author>
+  <o:LastAuthor>Bob Nau</o:LastAuthor>
+  <o:Revision>10</o:Revision>
+  <o:TotalTime>640</o:TotalTime>
+  <o:Created>2014-12-09T20:28:00Z</o:Created>
+  <o:LastSaved>2014-12-14T11:47:00Z</o:LastSaved>
+  <o:Pages>7</o:Pages>
+  <o:Words>2641</o:Words>
+  <o:Characters>15055</o:Characters>
+  <o:Company>Duke University</o:Company>
+  <o:Lines>125</o:Lines>
+  <o:Paragraphs>35</o:Paragraphs>
+  <o:CharactersWithSpaces>17661</o:CharactersWithSpaces>
+  <o:Version>14.00</o:Version>
+ </o:DocumentProperties>
+ <o:OfficeDocumentSettings>
+  <o:AllowPNG/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]-->
+<link rel="themeData" href="http://people.duke.edu/~rnau/411arim_files/themedata.thmx">
+<link rel="colorSchemeMapping" href="http://people.duke.edu/~rnau/411arim_files/colorschememapping.xml">
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Print</w:View>
+  <w:TrackMoves>false</w:TrackMoves>
+  <w:TrackFormatting/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>X-NONE</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SplitPgBreakAndParaMark/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="&#45;-"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="true"
+  DefSemiHidden="true" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="267">
+  <w:LsdException Locked="false" Priority="0" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 9"/>
+  <w:LsdException Locked="false" Priority="35" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" Priority="10" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" Priority="1" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" Priority="11" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" Priority="22" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Table Grid"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" QFormat="true" Name="TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;
+	mso-font-alt:\65B0\7D30\660E\9AD4;
+	mso-font-charset:136;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-1610611969 684719354 22 0 1048577 0;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;
+	mso-font-alt:\65B0\7D30\660E\9AD4;
+	mso-font-charset:136;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-1610611969 684719354 22 0 1048577 0;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-520081665 -1073717157 41 0 66047 0;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-1593833729 1073750107 16 0 415 0;}
+@font-face
+	{font-family:"\@PMingLiU";
+	panose-1:2 2 5 0 0 0 0 0 0 0;
+	mso-font-charset:136;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-1610611969 684719354 22 0 1048577 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;}
+h1
+	{mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"Heading 1 Char";
+	mso-style-next:Normal;
+	margin-top:24.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:14.0pt;
+	font-family:"Calibri Light","sans-serif";
+	mso-ascii-font-family:"Calibri Light";
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:"Calibri Light";
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	color:#2E74B5;
+	mso-themecolor:accent1;
+	mso-themeshade:191;
+	mso-font-kerning:0pt;
+	font-weight:bold;}
+h2
+	{mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"Heading 2 Char";
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:18.0pt;
+	font-family:"Times New Roman","serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"Balloon Text Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:8.0pt;
+	font-family:"Tahoma","sans-serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;}
+span.Heading1Char
+	{mso-style-name:"Heading 1 Char";
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Heading 1";
+	mso-ansi-font-size:14.0pt;
+	mso-bidi-font-size:14.0pt;
+	font-family:"Calibri Light","sans-serif";
+	mso-ascii-font-family:"Calibri Light";
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:"Calibri Light";
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	color:#2E74B5;
+	mso-themecolor:accent1;
+	mso-themeshade:191;
+	font-weight:bold;}
+span.Heading2Char
+	{mso-style-name:"Heading 2 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Heading 2";
+	mso-ansi-font-size:13.0pt;
+	mso-bidi-font-size:13.0pt;
+	font-family:"Calibri Light","sans-serif";
+	mso-ascii-font-family:"Calibri Light";
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:"Calibri Light";
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	color:#2E74B5;
+	mso-themecolor:accent1;
+	mso-themeshade:191;}
+span.BalloonTextChar
+	{mso-style-name:"Balloon Text Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Balloon Text";
+	mso-ansi-font-size:8.0pt;
+	mso-bidi-font-size:8.0pt;
+	font-family:"Tahoma","sans-serif";
+	mso-ascii-font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Tahoma;
+	mso-bidi-font-family:Tahoma;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-size:10.0pt;
+	mso-ansi-font-size:10.0pt;
+	mso-bidi-font-size:10.0pt;
+	mso-fareast-font-family:PMingLiU;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:983898794;
+	mso-list-template-ids:853997792;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l0:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1
+	{mso-list-id:1603302401;
+	mso-list-template-ids:1393474814;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif";}
+</style>
+<![endif]-->
+<meta name="AUTHOR" content="Fuqua School of Business">
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1027"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+<style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_close_icon:active{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_loader{background-color:#f6f7f8;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #3a5795;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{max-height:590px;min-height:590px;max-width:500px;min-width:500px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;left:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #2f477a;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f8;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style></head>
+
+<body lang="EN-US" link="blue" vlink="purple" style="tab-interval:.5in" data-feedly-mini="yes">
+
+<div class="WordSection1">
+
+<p style="margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:3.5in;
+margin-bottom:.0001pt;mso-outline-level:2"><script id="facebook-jssdk" src="./Introduction to ARIMA models_files/sdk.js"></script><script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script><!--[if gte vml 1]><v:shapetype id="_x0000_t75" coordsize="21600,21600"
+ o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f"
+ stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="Picture_x0020_21" o:spid="_x0000_s1026" type="#_x0000_t75"
+ href="411home.htm" style='position:absolute;left:0;text-align:left;
+ margin-left:14.4pt;margin-top:0;width:210.25pt;height:109.45pt;z-index:251657728;
+ visibility:visible;mso-wrap-style:square;mso-width-percent:0;
+ mso-height-percent:0;mso-wrap-distance-left:9pt;mso-wrap-distance-top:0;
+ mso-wrap-distance-right:9pt;mso-wrap-distance-bottom:0;
+ mso-position-horizontal:absolute;mso-position-horizontal-relative:text;
+ mso-position-vertical:absolute;mso-position-vertical-relative:text;
+ mso-width-percent:0;mso-height-percent:0;mso-width-relative:margin;
+ mso-height-relative:margin' o:button="t">
+ <v:imagedata src="411logo.gif"/>
+</v:shape><![endif]--><!--[if !vml]--><span style="mso-ignore:vglayout;position:
+absolute;z-index:251657728;left:0px;margin-left:19px;margin-top:0px;width:280px;
+height:146px"><a href="http://people.duke.edu/~rnau/411home.htm"><img border="0" width="280" height="146" src="./Introduction to ARIMA models_files/411logo.gif" title="" v:shapes="Picture_x0020_21"></a></span><!--[endif]--><b style="mso-bidi-font-weight:normal"><span style="font-size:10.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;;color:#000099">ARIMA models for time series forecasting<o:p></o:p></span></b></p>
+
+<p style="margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:3.5in;
+margin-bottom:.0001pt;mso-outline-level:2"><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p>&nbsp;</o:p></span></p>
+
+<p style="margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:3.5in;
+margin-bottom:.0001pt;mso-outline-level:2"><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><a href="http://people.duke.edu/~rnau/Notes_on_nonseasonal_ARIMA_models--Robert_Nau.pdf">Notes
+on nonseasonal ARIMA models (pdf file)</a><o:p></o:p></span></p>
+
+<p style="margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:3.5in;
+margin-bottom:.0001pt;mso-outline-level:2"><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><a href="http://people.duke.edu/~rnau/Slides_on_ARIMA_models--Robert_Nau.pdf">Slides on seasonal and
+nonseasonal ARIMA models (pdf file)</a><span style="color:#AFABAB;mso-themecolor:
+background2;mso-themeshade:191;mso-style-textfill-fill-color:#AFABAB;
+mso-style-textfill-fill-themecolor:background2;mso-style-textfill-fill-alpha:
+100.0%;mso-style-textfill-fill-colortransforms:lumm=75000"><o:p></o:p></span></span></p>
+
+<p style="margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:3.5in;
+margin-bottom:.0001pt;mso-outline-level:2"><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;color:#AFABAB;mso-themecolor:background2;
+mso-themeshade:191;mso-style-textfill-fill-color:#AFABAB;mso-style-textfill-fill-themecolor:
+background2;mso-style-textfill-fill-alpha:100.0%;mso-style-textfill-fill-colortransforms:
+lumm=75000"><a href="http://people.duke.edu/~rnau/411arim.htm"><span style="color:#AFABAB;mso-themecolor:
+background2;mso-themeshade:191;mso-style-textfill-fill-color:#AFABAB;
+mso-style-textfill-fill-themecolor:background2;mso-style-textfill-fill-alpha:
+100.0%;mso-style-textfill-fill-colortransforms:lumm=75000">Introduction to
+ARIMA: nonseasonal models</span></a></span><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> <br>
+<a href="http://people.duke.edu/~rnau/411arim2.htm">Identifying the order of differencing in an ARIMA model</a>
+<br>
+<a href="http://people.duke.edu/~rnau/411arim3.htm">Identifying the numbers of AR or MA terms in an ARIMA
+model</a> <br>
+<a href="http://people.duke.edu/~rnau/arimest.htm">Estimation of ARIMA models</a><br>
+<a href="http://people.duke.edu/~rnau/411sdif.htm">Seasonal differencing<span style="mso-spacerun:yes">&nbsp; </span>in ARIMA models</a> <br>
+<a href="http://people.duke.edu/~rnau/411searw.htm">Seasonal random walk: ARIMA(0,0,0)x(0,1,0)</a><br>
+<a href="http://people.duke.edu/~rnau/411seart.htm">Seasonal random trend: ARIMA(0,1,0)x(0,1,0)</a></span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><br>
+</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><a href="http://people.duke.edu/~rnau/seasarim.htm">General seasonal models: ARIMA (0,1,1)x(0,1,1) etc.</a><br>
+<a href="http://people.duke.edu/~rnau/arimrule.htm">Summary of rules for identifying ARIMA models</a> <br>
+<a href="http://people.duke.edu/~rnau/arimreg.htm">ARIMA models with regressors</a><br>
+<a href="http://people.duke.edu/~rnau/Mathematical_structure_of_ARIMA_models--Robert_Nau.pdf">The
+mathematical structure of ARIMA models (pdf file)</a><o:p></o:p></span></p>
+
+<p style="margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:3.5in;
+margin-bottom:.0001pt;mso-outline-level:1"><b style="mso-bidi-font-weight:normal"><span style="font-size:14.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p>&nbsp;</o:p></span></b></p>
+
+<p class="MsoNormal" style="mso-outline-level:1"><b style="mso-bidi-font-weight:
+normal"><span style="font-size:14.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#000099">Introduction to ARIMA:
+nonseasonal models</span></b><b style="mso-bidi-font-weight:normal"><span style="font-size:14.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;"><o:p></o:p></span></b></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><b style="mso-bidi-font-weight:normal"><span style="font-size:14.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></b></div>
+
+<p style="mso-outline-level:2"><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><a href="./Introduction to ARIMA models_files/Introduction to ARIMA models.html">ARIMA(p,d,q) forecasting equation</a><br>
+<a href="http://people.duke.edu/~rnau/411arim.htm#arima100">ARIMA(1,0,0) = first-order autoregressive model</a><br>
+<a href="http://people.duke.edu/~rnau/411arim.htm#arima010">ARIMA(0,1,0) = random walk</a> <br>
+<a href="http://people.duke.edu/~rnau/411arim.htm#arima110">ARIMA(1,1,0) = differenced first-order autoregressive model</a>
+<br>
+<a href="http://people.duke.edu/~rnau/411arim.htm#ses">ARIMA(0,1,1) without constant = simple exponential smoothing</a>
+<br>
+<a href="http://people.duke.edu/~rnau/411arim.htm#sesgrow">ARIMA(0,1,1) with constant = simple exponential smoothing
+with growth</a> <br>
+<a href="http://people.duke.edu/~rnau/411arim.htm#les">ARIMA(0,2,1) or (0,2,2) without constant = linear exponential
+smoothing</a> <br>
+<a href="http://people.duke.edu/~rnau/411arim.htm#mixed">ARIMA(1,1,2) with constant = damped-trend linear exponential
+smoothing</a> <br>
+<a href="http://people.duke.edu/~rnau/411arim.htm#spreadsheet">Spreadsheet implementation</a><o:p></o:p></span></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<p><a name="pdq"></a><b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">ARIMA(p,d,q)
+forecasting equation: </span></b><span style="font-size:10.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;">ARIMA models are, in theory, the most general class of
+models for forecasting a time series which can be made to be
+“stationary” by differencing (if necessary), perhaps in conjunction
+with nonlinear transformations such as logging or deflating (if necessary). A
+random variable that is a time series is stationary if its statistical
+properties are all constant over time.<span style="mso-spacerun:yes">&nbsp;
+</span><i style="mso-bidi-font-style:normal">A stationary series has no trend,
+its variations around its mean have a constant amplitude, and it wiggles in a
+consistent fashion</i>, i.e., its short-term random time patterns always look
+the same in a statistical sense.<span style="mso-spacerun:yes">&nbsp;
+</span>The latter condition means that its <i style="mso-bidi-font-style:normal">autocorrelations</i>
+(correlations with its own prior deviations from the mean) remain constant over
+time, or equivalently, that its <i style="mso-bidi-font-style:normal">power
+spectrum</i> remains constant over time.<span style="mso-spacerun:yes">&nbsp;
+</span>A random variable of this form can be viewed (as usual) as a combination
+of signal and noise, and the signal (if one is apparent) could be a pattern of
+fast or slow mean reversion, or sinusoidal oscillation, or rapid alternation in
+sign, and it could also have a seasonal component.<span style="mso-spacerun:yes">&nbsp; </span>An ARIMA model can be viewed as a
+“filter” that tries to separate the signal from the noise, and the
+signal is then extrapolated into the future to obtain forecasts.<o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">The ARIMA
+forecasting equation for a stationary time series is a <i style="mso-bidi-font-style:
+normal">linear</i> (i.e., regression-type) equation in which the predictors
+consist of <i style="mso-bidi-font-style:normal">lags of the dependent</i>
+variable and/or <i style="mso-bidi-font-style:normal">lags of the forecast
+errors</i>.<span style="mso-spacerun:yes">&nbsp; </span>That is:<o:p></o:p></span></p>
+
+<p><b style="mso-bidi-font-weight:normal"><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">Predicted value of </span></b><b style="mso-bidi-font-weight:normal"><span style="font-size:11.0pt">Y</span></b><b style="mso-bidi-font-weight:normal"><span style="font-size:10.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;"> = a constant and/or a weighted sum of one or more
+recent values of </span></b><b style="mso-bidi-font-weight:normal"><span style="font-size:11.0pt;mso-bidi-font-size:10.0pt">Y</span></b><b style="mso-bidi-font-weight:normal"><span style="font-size:10.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;"> and/or a weighted sum of one or more recent values of
+the errors.<o:p></o:p></span></b></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">If the
+predictors consist only of lagged values of </span><span style="font-size:11.0pt;
+mso-bidi-font-size:10.0pt">Y</span><span style="font-size:10.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;">, it is a pure autoregressive
+(“self-regressed”) model, which is just a special case of a
+regression model and which could be fitted with standard regression
+software.<span style="mso-spacerun:yes">&nbsp; </span>For example, a
+first-order autoregressive (“AR(1)”) model for </span><span style="font-size:11.0pt;mso-bidi-font-size:10.0pt">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> is a simple
+regression model in which the independent variable is just </span><span style="font-size:11.0pt;mso-bidi-font-size:10.0pt">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> lagged by one
+period (LAG(Y,1) in Statgraphics or Y_LAG1 in RegressIt).<span style="mso-spacerun:yes">&nbsp; </span>If some of the predictors are lags of
+the errors, an ARIMA model it is NOT a linear regression model, because there
+is no way to specify “last period’s error” as an independent
+variable:<span style="mso-spacerun:yes">&nbsp; </span>the errors must be
+computed on a period-to-period basis when the model is fitted to the data.<span style="mso-spacerun:yes">&nbsp; </span>From a technical standpoint, the problem
+with using lagged errors as predictors is that <i style="mso-bidi-font-style:
+normal">the model’s predictions are not linear functions of the
+coefficients</i>, even though they are linear functions of the past data.<span style="mso-spacerun:yes">&nbsp; </span>So, coefficients in ARIMA models that
+include lagged errors must be estimated by <i style="mso-bidi-font-style:normal">nonlinear</i>
+optimization methods (“hill-climbing”) rather than by just solving
+a system of equations.</span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">The
+acronym ARIMA stands for <b style="mso-bidi-font-weight:normal">Auto-Regressive
+Integrated Moving Average</b>. Lags of the stationarized series in the
+forecasting equation are called "autoregressive" terms, lags of the
+forecast errors are called "moving average" terms, and a time series
+which needs to be differenced to be made stationary is said to be an
+"integrated" version of a stationary series. <b>Random-walk and
+random-trend models, autoregressive models, and exponential smoothing models
+are all special cases of ARIMA models.</b> </span><span style="font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">A
+nonseasonal ARIMA model is classified as an "ARIMA(p,d,q)" model,
+where: </span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<ul type="disc">
+ <li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo3;tab-stops:list .5in"><b><span style="font-size:
+     10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">p</span></b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+     &quot;Times New Roman&quot;"> is the number of autoregressive terms, </span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;"><o:p></o:p></span></li>
+ <li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo3;tab-stops:list .5in"><b><span style="font-size:
+     10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">d</span></b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+     &quot;Times New Roman&quot;"> is the number of nonseasonal differences needed for
+     stationarity, and </span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;
+     mso-fareast-font-family:&quot;Times New Roman&quot;"><o:p></o:p></span></li>
+ <li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo3;tab-stops:list .5in"><b><span style="font-size:
+     10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">q</span></b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+     &quot;Times New Roman&quot;"> is the number of lagged forecast errors in the prediction
+     equation. </span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;
+     mso-fareast-font-family:&quot;Times New Roman&quot;"><o:p></o:p></span></li>
+</ul>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;">The forecasting equation is constructed as follows.<span style="mso-spacerun:yes">&nbsp; </span>First, let </span>y<sub><span style="font-size:14.0pt"> </span></sub><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">denote
+the d<sup>th</sup> difference of </span>Y<span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">,
+which means:<o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;">If d=0: </span><span style="font-size:14.0pt"><span style="mso-spacerun:yes">&nbsp;</span>y<sub>t</sub><span style="mso-spacerun:yes">&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp;
+</span>Y<sub>t</sub><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;">If d=1: </span><span style="font-size:14.0pt"><span style="mso-spacerun:yes">&nbsp;</span>y<sub>t</sub><span style="mso-spacerun:yes">&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp;
+</span>Y<sub>t</sub> </span><span style="font-size:14.0pt;font-family:&quot;Courier New&quot;">-
+</span><span style="font-size:14.0pt">Y<sub>t-1</sub><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;">If d=2: </span><span style="font-size:14.0pt"><span style="mso-spacerun:yes">&nbsp;</span>y<sub>t</sub><span style="mso-spacerun:yes">&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp;
+</span>(Y<sub>t</sub> </span><span style="font-size:14.0pt;font-family:&quot;Courier New&quot;">-
+</span><span style="font-size:14.0pt">Y<sub>t-1</sub>) </span><span style="font-size:14.0pt;font-family:&quot;Courier New&quot;">-</span><span style="font-size:14.0pt"> (Y<sub>t-1</sub> </span><span style="font-size:14.0pt;
+font-family:&quot;Courier New&quot;">- </span><span style="font-size:14.0pt">Y<sub>t-2</sub>)<span style="mso-spacerun:yes">&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp;
+</span>Y<sub>t</sub> </span><span style="font-size:14.0pt;font-family:&quot;Courier New&quot;">-
+2</span><span style="font-size:14.0pt">Y<sub>t-1</sub> + Y<sub>t-2</sub><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">Note that the
+second difference of </span><span style="font-size:11.0pt;mso-bidi-font-size:
+10.0pt">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">
+(the d=2 case) is not the difference from 2 periods ago.<span style="mso-spacerun:yes">&nbsp; </span>Rather, it is the <i style="mso-bidi-font-style:
+normal">first-difference-of-the-first difference</i>, which is the discrete
+analog of a second derivative, i.e., the local acceleration of the series
+rather than its local trend.<o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">In terms
+of </span>y<span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">,
+the general forecasting equation is:<o:p></o:p></span></p>
+
+<p><span style="font-size:14.0pt">ŷ<sub>t</sub><span style="mso-spacerun:yes">&nbsp;&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp;&nbsp; </span>μ + ϕ</span><sub>1</sub><span style="font-size:14.0pt"> y</span><sub>t-1</sub><span style="font-size:14.0pt">
+</span><span style="font-size:14.0pt;font-family:&quot;Courier New&quot;">+…+</span><span style="font-size:14.0pt"> ϕ</span><sub>p</sub> y<sub>t-p</sub><span style="font-size:14.0pt"> </span><span style="font-size:14.0pt;font-family:
+&quot;Courier New&quot;">-</span><span style="font-size:14.0pt"> </span>θ<sub>1</sub><span style="font-size:14.0pt">e</span><sub>t-1</sub> <span style="font-size:14.0pt;
+font-family:&quot;Courier New&quot;">-…-</span><span style="font-size:14.0pt"> </span>θ<sub>q</sub><span style="font-size:14.0pt">e</span><sub>t-q</sub><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">Here the
+moving average parameters (</span>θ’s<span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">) are defined so that their signs are negative
+in the equation, following the convention introduced by Box and Jenkins.<span style="mso-spacerun:yes">&nbsp; </span>Some authors and software (including the
+R programming language) define them so that they have plus signs instead.<span style="mso-spacerun:yes">&nbsp; </span>When actual numbers are plugged into the
+equation, there is no ambiguity, but it’s important to know which
+convention your software uses when you are reading the output.<span style="mso-spacerun:yes">&nbsp; </span>Often the parameters are denoted there
+by AR(1), AR(2), …, and MA(1), MA(2), … etc..<o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">To
+identify the appropriate ARIMA model for</span><span style="font-size:11.0pt;
+mso-bidi-font-size:10.0pt"> Y</span><span style="font-size:10.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;">, you begin by determining the order of differencing
+(d) needing to stationarize the series and remove the gross features of
+seasonality, perhaps in conjunction with a variance-stabilizing transformation
+such as logging or deflating. If you stop at this point and predict that the
+differenced series is constant, you have merely fitted a random walk or random
+trend model.<span style="mso-spacerun:yes">&nbsp; </span>However, the
+stationarized series may still have autocorrelated errors, suggesting that some
+number of AR terms (p ≥ 1) and/or some number MA terms (q ≥ 1) are
+also needed in the forecasting equation.<o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">The
+process of determining the values of p, d, and q that are best for a given time
+series will be discussed in later sections of the notes (whose links are at the
+top of this page), but a preview of some of the types of <i style="mso-bidi-font-style:
+normal">nonseasonal</i> ARIMA models that are commonly encountered is given
+below.<o:p></o:p></span></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<p><a name="arima110"></a><a name="arima100"></a><b><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">ARIMA(1,0,0) = first-order autoregressive
+model: </span></b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;
+mso-bidi-font-weight:bold">if the series is stationary and autocorrelated,
+perhaps it can be predicted as a multiple of its own previous value, plus a
+constant.<span style="mso-spacerun:yes">&nbsp; </span>The forecasting equation
+in this case is <o:p></o:p></span></p>
+
+<p><span style="font-size:14.0pt">Ŷ<sub>t</sub><span style="mso-spacerun:yes">&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp;
+</span>μ<span style="mso-spacerun:yes">&nbsp; </span>+<span style="mso-spacerun:yes">&nbsp; </span>ϕ<sub>1</sub>Y<sub>t-1</sub></span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+bold">…which is </span><span style="font-size:11.0pt;mso-bidi-font-size:
+10.0pt;mso-bidi-font-weight:bold">Y</span><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:bold"> regressed on
+itself lagged by one period. This is an “ARIMA(1,0,0)+constant”
+model.<span style="mso-spacerun:yes">&nbsp; </span>If the mean of </span><span style="font-size:11.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:bold">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+bold"> is zero, then the constant term would not be included. <o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+bold">If the slope coefficient<i style="mso-bidi-font-style:normal"> </i></span><span style="font-size:14.0pt">ϕ</span><sub><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:bold">1</span></sub><i style="mso-bidi-font-style:normal"><span style="font-size:10.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:bold"> </span></i><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+bold">is positive and less than 1 in magnitude (it <i style="mso-bidi-font-style:
+normal">must</i> be less than 1 in magnitude if </span><span style="font-size:
+11.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:bold">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+bold"> is stationary), the model describes mean-reverting behavior in which
+next period’s value should be predicted to be </span><span style="font-size:14.0pt">ϕ</span><sub><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:bold">1 </span></sub><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+bold">times as far away from the mean as this period’s value.<span style="mso-spacerun:yes">&nbsp; </span>If </span><span style="font-size:14.0pt">ϕ</span><sub><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+bold">1<span style="mso-spacerun:yes">&nbsp; </span></span></sub><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+bold">is negative, it predicts mean-reverting behavior with alternation of
+signs, i.e., it also predicts that </span><span style="font-size:11.0pt;
+mso-bidi-font-size:10.0pt;mso-bidi-font-weight:bold">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+bold"> will be below the mean next period if it is above the mean this period.<o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+bold">In a <i style="mso-bidi-font-style:normal">second-order</i>
+autoregressive model (ARIMA(2,0,0)), there would be a Y<sub>t-2 </sub><span style="mso-spacerun:yes">&nbsp;</span>term on the right as well, and so
+on.<span style="mso-spacerun:yes">&nbsp; </span>Depending on the signs and
+magnitudes of the coefficients, an ARIMA(2,0,0) model could describe a system
+whose mean reversion takes place in a <i style="mso-bidi-font-style:normal">sinusoidally
+oscillating</i> fashion, like the motion of a mass on a spring that is
+subjected to random shocks.<o:p></o:p></span></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<p><a name="arima010"></a><b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">ARIMA(0,1,0)
+= random walk: </span></b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><span style="mso-spacerun:yes">&nbsp;</span>If the series </span><span style="font-size:11.0pt;mso-bidi-font-size:10.0pt">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> is not stationary,
+the simplest possible model for it is a random walk model, which can be
+considered as a limiting case of an AR(1) model in which the autoregressive
+coefficient is equal to 1, i.e., a series with infinitely slow mean
+reversion.<span style="mso-spacerun:yes">&nbsp; </span>The prediction equation
+for this model can be written as: <o:p></o:p></span></p>
+
+<p><span style="font-size:14.0pt">Ŷ<sub>t</sub><span style="mso-spacerun:yes">&nbsp; </span></span><span style="font-size:14.0pt;
+font-family:&quot;Courier New&quot;">-</span><span style="font-size:14.0pt"> Y<sub>t-1<span style="mso-spacerun:yes">&nbsp;&nbsp; </span></sub>=<span style="mso-spacerun:yes">&nbsp; </span>μ</span><span style="font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">or
+equivalently<o:p></o:p></span></p>
+
+<p><span style="font-size:14.0pt">Ŷ<sub>t</sub><span style="mso-spacerun:yes">&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp;&nbsp; </span>μ + Y<sub>t-1</sub></span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">...where
+the constant term is the average period-to-period change (i.e. the long-term
+drift) in </span><span style="font-size:11.0pt;mso-bidi-font-size:10.0pt">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">.<span style="mso-spacerun:yes">&nbsp; </span>This model could be fitted as a <i style="mso-bidi-font-style:normal">no-intercept regression model</i> in which
+the first difference of </span><span style="font-size:11.0pt;mso-bidi-font-size:
+10.0pt">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">
+is the dependent variable.<span style="mso-spacerun:yes">&nbsp; </span>Since it
+includes (only) a nonseasonal difference and a constant term, it is classified
+as an "ARIMA(0,1,0) model with constant." The random-walk-<i style="mso-bidi-font-style:normal">without</i>-drift model would be an
+ARIMA(0,1,0) model <i>without</i> constant</span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<p><b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">ARIMA(1,1,0)
+= differenced first-order autoregressive model: </span></b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">If the errors of a
+random walk model<i style="mso-bidi-font-style:normal"> </i>are autocorrelated,
+perhaps the problem can be fixed by adding one lag of the dependent variable to
+the prediction equation--i.e., by regressing <i style="mso-bidi-font-style:
+normal">the first difference of </i></span><i style="mso-bidi-font-style:normal"><span style="font-size:11.0pt;mso-bidi-font-size:10.0pt">Y</span></i><i style="mso-bidi-font-style:normal"><span style="font-size:10.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;"> </span></i><span style="font-size:10.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;">on itself lagged by one period. This would yield the
+following prediction equation: <o:p></o:p></span></p>
+
+<p><span style="font-size:14.0pt">Ŷ<sub>t</sub> </span><span style="font-size:14.0pt;font-family:&quot;Courier New&quot;">-</span><span style="font-size:14.0pt"> Y<sub>t-1 </sub><span style="mso-spacerun:yes">&nbsp;</span>=<span style="mso-spacerun:yes">&nbsp;
+</span>μ<span style="mso-spacerun:yes">&nbsp; </span>+<span style="mso-spacerun:yes">&nbsp; </span>ϕ<sub>1</sub>(Y<sub>t-1 </sub></span><span style="font-size:14.0pt;font-family:&quot;Courier New&quot;">-</span><span style="font-size:14.0pt"> Y<sub>t-2</sub>)<o:p></o:p></span></p>
+
+<p><span style="font-size:14.0pt">Ŷ<sub>t</sub><span style="mso-spacerun:yes">&nbsp; </span></span><span style="font-size:14.0pt;
+font-family:&quot;Courier New&quot;">-</span><span style="font-size:14.0pt"> Y<sub>t-1<span style="mso-spacerun:yes">&nbsp;&nbsp; </span></sub>=<span style="mso-spacerun:yes">&nbsp; </span>μ</span><span style="font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">which can
+be rearranged to <o:p></o:p></span></p>
+
+<p><span style="font-size:14.0pt">Ŷ<sub>t</sub><span style="mso-spacerun:yes">&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp;
+</span>μ<span style="mso-spacerun:yes">&nbsp; </span>+ Y<sub>t-1</sub><span style="mso-spacerun:yes">&nbsp; </span>+<span style="mso-spacerun:yes">&nbsp;
+</span>ϕ<sub>1</sub> (Y<sub>t-1 </sub></span><span style="font-size:14.0pt;
+font-family:&quot;Courier New&quot;">-</span><span style="font-size:14.0pt"> Y<sub>t-2</sub>)</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">This is a
+first-order autoregressive model with one order of nonseasonal differencing and
+a constant term--i.e., an ARIMA(1,1,0) model.</span><span style="font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<p><a name="ses"></a><b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">ARIMA(0,1,1)
+without constant = simple exponential smoothing:</span></b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> Another strategy
+for correcting autocorrelated errors in a random walk model is suggested by the
+simple exponential smoothing model. Recall that for some nonstationary time
+series (e.g., ones that exhibit noisy fluctuations around a slowly-varying
+mean), the random walk model does not perform as well as a moving average of
+past values. In other words, rather than taking the most recent observation as
+the forecast of the next observation, it is better to use an <i>average </i>of
+the last few observations in order to filter out the noise and more accurately
+estimate the local mean. The simple exponential smoothing model uses an <i>exponentially
+weighted moving average</i> of past values to achieve this effect. The
+prediction equation for the simple exponential smoothing model can be written
+in a number of <a href="http://people.duke.edu/~rnau/411avg.htm#SES">mathematically
+equivalent forms</a>, one of which is the so-called “error correction”
+form, in which the previous forecast is adjusted in the direction of the error
+it made: <o:p></o:p></span></p>
+
+<p><span style="font-size:14.0pt">Ŷ<sub>t</sub><span style="mso-spacerun:yes">&nbsp;&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp; </span>Ŷ</span><sub>t-1</sub><sub><span style="font-size:14.0pt"> </span></sub><span style="font-size:14.0pt"><span style="mso-spacerun:yes">&nbsp;</span>+ </span><span lang="FR-CA" style="font-size:14.0pt;mso-ansi-language:FR-CA">α</span><span style="font-size:14.0pt">e</span><sub>t-1<span style="mso-spacerun:yes">&nbsp;
+</span></sub><span style="mso-spacerun:yes">&nbsp;</span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">Because</span>
+e<sub>t-1</sub> = Y<sub>t-1</sub> <span style="font-family:&quot;Courier New&quot;">-</span>
+Ŷ<sub>t-1</sub> <span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">by
+definition, this can be rewritten as:<o:p></o:p></span></p>
+
+<p><span lang="FR-CA" style="font-size:14.0pt;mso-ansi-language:FR-CA">Ŷ<sub>t</sub><span style="mso-spacerun:yes">&nbsp;&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp; </span>Y</span><sub><span lang="FR-CA" style="mso-ansi-language:FR-CA">t-1</span></sub><sub><span lang="FR-CA" style="font-size:14.0pt;mso-ansi-language:FR-CA"> </span></sub><span lang="FR-CA" style="font-size:14.0pt;mso-ansi-language:FR-CA"><span style="mso-spacerun:yes">&nbsp;</span></span><span lang="FR-CA" style="font-size:
+14.0pt;font-family:&quot;Courier New&quot;;mso-ansi-language:FR-CA">-</span><span lang="FR-CA" style="font-size:14.0pt;mso-ansi-language:FR-CA"> (1</span><span lang="FR-CA" style="font-size:14.0pt;font-family:&quot;Courier New&quot;;mso-ansi-language:
+FR-CA">-</span><span lang="FR-CA" style="font-size:14.0pt;mso-ansi-language:FR-CA">α)e</span><sub><span lang="FR-CA" style="mso-ansi-language:FR-CA">t-1</span></sub><span lang="FR-CA" style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-ansi-language:
+FR-CA"><o:p></o:p></span></p>
+
+<p><span lang="FR-CA" style="font-size:14.0pt;mso-ansi-language:FR-CA"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp; </span>Y</span><sub><span lang="FR-CA" style="mso-ansi-language:FR-CA">t-1</span></sub><sub><span lang="FR-CA" style="font-size:14.0pt;mso-ansi-language:FR-CA"> </span></sub><span lang="FR-CA" style="font-size:14.0pt;mso-ansi-language:FR-CA"><span style="mso-spacerun:yes">&nbsp;</span></span><span lang="FR-CA" style="font-size:
+14.0pt;font-family:&quot;Courier New&quot;;mso-ansi-language:FR-CA">-</span><span lang="FR-CA" style="font-size:14.0pt;mso-ansi-language:FR-CA"> </span>θ<sub><span lang="FR-CA" style="mso-ansi-language:FR-CA">1</span></sub><span lang="FR-CA" style="font-size:14.0pt;mso-ansi-language:FR-CA">e</span><sub><span lang="FR-CA" style="mso-ansi-language:FR-CA">t-1</span></sub><span lang="FR-CA" style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-ansi-language:FR-CA"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">which is
+an ARIMA(0,1,1)-without-constant forecasting equation with </span><span style="font-size:10.0pt">θ<sub>1</sub> = 1</span><span style="font-size:
+10.0pt;font-family:&quot;Courier New&quot;">-</span><span lang="FR-CA" style="font-size:
+11.0pt;mso-ansi-language:FR-CA">α</span><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">. This means that you can fit a simple
+exponential smoothing by specifying it as an ARIMA(0,1,1) model without
+constant, and the estimated MA(1) coefficient corresponds to 1-minus-alpha in
+the SES formula.<span style="mso-spacerun:yes">&nbsp; </span>Recall that in the
+SES model, the <i style="mso-bidi-font-style:normal">average age</i> of the
+data in the 1-period-ahead forecasts is 1/</span><span lang="FR-CA" style="font-size:11.0pt;mso-ansi-language:FR-CA">α</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">, meaning that they
+will tend to lag behind trends or turning points by about 1/</span><span lang="FR-CA" style="font-size:11.0pt;mso-ansi-language:FR-CA">α</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> periods.<span style="mso-spacerun:yes">&nbsp; </span>It follows that the average age of the
+data in the 1-period-ahead forecasts of an ARIMA(0,1,1)-without-constant model
+is 1/(1</span><span style="font-size:10.0pt;font-family:&quot;Courier New&quot;">-</span><span style="font-size:10.0pt">θ<sub>1</sub>)</span><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">.<span style="mso-spacerun:yes">&nbsp;
+</span>So, for example, if </span><span style="font-size:10.0pt">θ<sub>1</sub>
+= 0.8, </span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">the
+average age is 5.<span style="mso-spacerun:yes">&nbsp; </span>As </span><span style="font-size:10.0pt">θ<sub>1</sub> </span><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">approaches 1, the
+ARIMA(0,1,1)-without-constant model becomes a very-long-term moving average,
+and as </span><span style="font-size:10.0pt">θ<sub>1</sub></span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> approaches 0 it
+becomes a random-walk-without-drift model.<o:p></o:p></span></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<p><b style="mso-bidi-font-weight:normal"><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">What’s the best way to correct for
+autocorrelation: adding AR terms or adding MA terms?<span style="mso-spacerun:yes">&nbsp; </span></span></b><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">In the previous two models discussed above,
+the problem of autocorrelated errors in a random walk model was fixed in two
+different ways:<span style="mso-spacerun:yes">&nbsp; </span>by adding a lagged
+value of the differenced series to the equation or adding a lagged value of the
+forecast error.<span style="mso-spacerun:yes">&nbsp; </span>Which approach is
+best?<span style="mso-spacerun:yes">&nbsp; </span>A rule-of-thumb for this
+situation, which will be discussed in more detail later on, is that <i style="mso-bidi-font-style:normal">positive</i> autocorrelation is usually best
+treated by adding an AR term to the model and <i style="mso-bidi-font-style:
+normal">negative</i> autocorrelation is usually best treated by adding an MA
+term.<span style="mso-spacerun:yes">&nbsp; </span>In business and economic time
+series, <i style="mso-bidi-font-style:normal">negative</i> autocorrelation
+often arises as <i style="mso-bidi-font-style:normal">an artifact of
+differencing</i>.<span style="mso-spacerun:yes">&nbsp; </span>(In general,
+differencing reduces positive autocorrelation and may even cause a switch from
+positive to negative autocorrelation.)<span style="mso-spacerun:yes">&nbsp;
+</span>So, the ARIMA(0,1,1) model, in which differencing is accompanied by an
+MA term, is more often used than an ARIMA(1,1,0) model.</span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<p><a name="sesgrow"></a><b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">ARIMA(0,1,1)
+with constant = simple exponential smoothing with growth:</span></b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> By implementing
+the SES model as an ARIMA model, you actually gain some flexibility. First of
+all, the estimated MA(1) coefficient is allowed to be <i>negative</i>: this
+corresponds to a smoothing factor larger than 1 in an SES model, which is
+usually not allowed by the SES model-fitting procedure. Second, you have the
+option of including a constant term in the ARIMA model if you wish, in order to
+estimate an average non-zero trend. The ARIMA(0,1,1) model <i>with</i> constant
+has the prediction equation: <o:p></o:p></span></p>
+
+<p><span style="font-size:14.0pt">Ŷ<sub>t</sub><span style="mso-spacerun:yes">&nbsp;&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp; </span>μ<span style="mso-spacerun:yes">&nbsp; </span>+ Y</span><sub>t-1</sub><sub><span style="font-size:14.0pt"> </span></sub><span style="font-size:14.0pt"><span style="mso-spacerun:yes">&nbsp;</span></span><span style="font-size:14.0pt;
+font-family:&quot;Courier New&quot;">-</span><span style="font-size:14.0pt"> </span>θ<sub>1</sub><span style="font-size:14.0pt">e</span><sub>t-1</sub></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">The
+one-period-ahead forecasts from this model are qualitatively similar to those
+of the SES model, except that the trajectory of the long-term forecasts is
+typically a sloping line (whose slope is equal to mu) rather than a horizontal
+line.</span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<p><a name="les"></a><b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">ARIMA(0,2,1)
+or (0,2,2) without constant = linear exponential smoothing: </span></b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">Linear exponential
+smoothing models are ARIMA models which use <i style="mso-bidi-font-style:normal">two</i>
+nonseasonal differences in conjunction with MA terms. The second difference of
+a series </span><span style="font-size:11.0pt;mso-bidi-font-size:10.0pt">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> is not simply the
+difference between </span><span style="font-size:11.0pt;mso-bidi-font-size:
+10.0pt">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">
+and itself lagged by two periods, but rather it is the <i>first difference of
+the first difference</i>--i.e., the change-in-the-change of </span><span style="font-size:11.0pt;mso-bidi-font-size:10.0pt">Y</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> at period t. Thus,
+<b>the second difference of </b></span><b><span style="font-size:11.0pt;
+mso-bidi-font-size:10.0pt">Y</span></b><b><span style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> at period t is equal to </span></b><span style="mso-fareast-font-family:PMingLiU;mso-fareast-language:ZH-TW">(Y</span><sub>t</sub>
+- Y<sub>t-1</sub><span style="mso-fareast-font-family:PMingLiU;mso-fareast-language:
+ZH-TW">) </span><sub><span style="mso-spacerun:yes">&nbsp;</span></sub>- (Y<sub>t-1
+</sub>- Y<sub>t-2</sub>)<span style="mso-bidi-font-weight:bold"> </span><span style="mso-fareast-font-family:PMingLiU;mso-fareast-language:ZH-TW;mso-bidi-font-weight:
+bold"><span style="mso-spacerun:yes">&nbsp;</span></span><span style="mso-bidi-font-weight:bold">= </span><span style="mso-fareast-font-family:
+PMingLiU;mso-fareast-language:ZH-TW;mso-bidi-font-weight:bold"><span style="mso-spacerun:yes">&nbsp;</span></span><span style="mso-fareast-font-family:
+PMingLiU;mso-fareast-language:ZH-TW">Y</span><sub>t</sub> - 2Y<sub>t-1</sub> +
+Y<sub>t-2</sub>.<span style="font-size:10.0pt"> </span><span style="font-size:
+10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">A second difference of a discrete
+function is analogous to a second derivative of a continuous function: it
+measures the "acceleration" or "curvature" in the function
+at a given point in time. </span><span style="font-size:10.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:PMingLiU;mso-fareast-language:
+ZH-TW"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">The
+ARIMA(0,2,2) model without constant predicts that the second difference of the
+series equals a linear function of the last two forecast errors: <o:p></o:p></span></p>
+
+<p><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR">Ŷ<sub>t</sub>
+</span><span lang="FR" style="font-size:14.0pt;font-family:&quot;Courier New&quot;;
+mso-ansi-language:FR">-</span><span lang="FR" style="font-size:14.0pt;mso-ansi-language:
+FR"> 2Y<sub>t</sub></span><sub><span lang="FR" style="mso-ansi-language:FR">-1</span></sub><sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR"> </span></sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR"><span style="mso-spacerun:yes">&nbsp;</span>+ Y</span><sub><span lang="FR" style="mso-ansi-language:FR">t-2</span></sub><span lang="FR" style="font-size:
+14.0pt;mso-ansi-language:FR"><span style="mso-spacerun:yes">&nbsp;
+</span>=<span style="mso-spacerun:yes">&nbsp; </span></span><span lang="FR" style="font-size:14.0pt;font-family:&quot;Courier New&quot;;mso-ansi-language:FR">-<sub> </sub></span>θ<sub><span lang="FR" style="mso-ansi-language:FR">1</span></sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR">e</span><sub><span lang="FR" style="mso-ansi-language:FR">t-1</span></sub><span lang="FR" style="mso-ansi-language:
+FR"> </span><span lang="FR" style="font-size:14.0pt;font-family:&quot;Courier New&quot;;
+mso-ansi-language:FR">-</span><span lang="FR" style="font-size:14.0pt;mso-ansi-language:
+FR"> </span>θ<sub><span lang="FR" style="mso-ansi-language:FR">2</span></sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR">e</span><sub><span lang="FR" style="mso-ansi-language:FR">t-2</span></sub><span lang="FR" style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-ansi-language:FR"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">which can
+be rearranged as: <o:p></o:p></span></p>
+
+<p><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR">Ŷ<sub>t</sub><span style="mso-spacerun:yes">&nbsp;&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp; </span>2 Y<sub>t</sub></span><sub><span lang="FR" style="mso-ansi-language:FR">-1</span></sub><sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR"><span style="mso-spacerun:yes">&nbsp; </span></span></sub><span lang="FR" style="font-size:14.0pt;font-family:&quot;Courier New&quot;;mso-ansi-language:FR">-</span><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR"> Y<sub>t</sub></span><sub><span lang="FR" style="mso-ansi-language:FR">-2</span></sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR"> </span><span lang="FR" style="font-size:14.0pt;font-family:&quot;Courier New&quot;;mso-ansi-language:FR">-</span><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR"> </span>θ<sub><span lang="FR" style="mso-ansi-language:FR">1</span></sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR">e</span><sub><span lang="FR" style="mso-ansi-language:FR">t-1</span></sub><span lang="FR" style="font-size:
+14.0pt;mso-ansi-language:FR"> </span><span lang="FR" style="font-size:14.0pt;
+font-family:&quot;Courier New&quot;;mso-ansi-language:FR">-</span><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR"> </span>θ<sub><span lang="FR" style="mso-ansi-language:FR">2</span></sub><span lang="FR" style="font-size:14.0pt;
+mso-ansi-language:FR">e</span><sub><span lang="FR" style="mso-ansi-language:FR">t-2</span></sub><span lang="FR" style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-ansi-language:FR"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">where</span>
+θ<sub>1</sub><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">
+and </span>θ<sub>2</sub><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">
+are the MA(1) and MA(2) coefficients. This is a general <i style="mso-bidi-font-style:
+normal">linear exponential smoothing model</i>, essentially the same as
+Holt’s model, and Brown’s model is a special case.<span style="mso-spacerun:yes">&nbsp;&nbsp; </span>It uses exponentially weighted
+moving averages to estimate both a <i style="mso-bidi-font-style:normal">local
+level</i> and a <i style="mso-bidi-font-style:normal">local trend</i> in the
+series.<span style="mso-spacerun:yes">&nbsp; </span>The long-term forecasts
+from this model converge to a straight line whose slope depends on the average
+trend observed toward the end of the series.</span><span style="font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<p><a name="DDE_LINK1"></a><a name="mixed"></a><b style="mso-bidi-font-weight:
+normal"><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">ARIMA(1,1,2)
+without constant = damped-trend linear exponential smoothing</span></b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">:</span><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+PMingLiU;mso-fareast-language:ZH-TW"><o:p></o:p></span></p>
+
+<p><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR">Ŷ<sub>t</sub><span style="mso-spacerun:yes">&nbsp;&nbsp; </span>=<span style="mso-spacerun:yes">&nbsp;&nbsp; </span>Y</span><sub><span lang="FR" style="mso-ansi-language:FR">t-1</span></sub><sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR"> </span></sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR"><span style="mso-spacerun:yes">&nbsp;</span>+<span style="mso-spacerun:yes">&nbsp;
+</span></span><span style="font-size:14.0pt">ϕ</span><sub><span lang="FR" style="mso-ansi-language:FR">1</span></sub><span lang="FR" style="font-size:14.0pt;
+mso-ansi-language:FR"> (Y</span><sub><span lang="FR" style="mso-ansi-language:
+FR">t-1</span></sub><sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:
+FR"> </span></sub><span lang="FR" style="font-size:14.0pt;font-family:&quot;Courier New&quot;;
+mso-ansi-language:FR">-</span><span lang="FR" style="font-size:14.0pt;mso-ansi-language:
+FR"> Y</span><sub><span lang="FR" style="mso-ansi-language:FR">t-2</span></sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR"> ) </span><span lang="FR" style="font-size:14.0pt;font-family:&quot;Courier New&quot;;mso-ansi-language:FR">-</span><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR"> </span>θ<sub><span lang="FR" style="mso-ansi-language:FR">1</span></sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR">e</span><sub><span lang="FR" style="mso-ansi-language:FR">t-1</span></sub><span lang="FR" style="mso-ansi-language:
+FR"> </span><span lang="FR" style="font-size:14.0pt;font-family:&quot;Courier New&quot;;
+mso-ansi-language:FR">-</span><span lang="FR" style="font-size:14.0pt;mso-ansi-language:
+FR"> </span>θ<sub><span lang="FR" style="mso-ansi-language:FR">1</span></sub><span lang="FR" style="font-size:14.0pt;mso-ansi-language:FR">e</span><sub><span lang="FR" style="mso-ansi-language:FR">t-1</span></sub><span lang="FR" style="mso-ansi-language:FR"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">This model
+is illustrated in the accompanying<span style="mso-spacerun:yes">&nbsp; </span><a href="http://people.duke.edu/~rnau/Slides_on_ARIMA_models--Robert_Nau.pdf">slides
+on ARIMA models</a>.<span style="mso-spacerun:yes">&nbsp; </span>It
+extrapolates the local trend at the end of the series but flattens it out at
+longer forecast horizons to introduce a note of conservatism, a practice that
+has empirical support.<span style="mso-spacerun:yes">&nbsp; </span>See the
+article on <a href="http://www.bauer.uh.edu/gardner/docs/pdf/Why-the-damped-trend-works.pdf">"Why
+the Damped Trend works"</a><span style="mso-spacerun:yes">&nbsp; </span>by
+Gardner and McKenzie and the <a href="http://www.kestencgreen.com/GoldenRule.pdf">"Golden Rule"
+article</a> by Armstrong et al. for details.<o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">It is
+generally advisable to stick to models in which at least one of p and q is no
+larger than 1, i.e., do not try to fit a model such as ARIMA(2,1,2), as this is
+likely to lead to overfitting and "common-factor" issues that are
+discussed in more detail in the notes on the <a href="http://people.duke.edu/~rnau/Mathematical_structure_of_ARIMA_models--Robert_Nau.pdf">mathematical
+structure of ARIMA models</a>.</span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<p><a name="spreadsheet"></a><b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">Spreadsheet
+implementation: </span></b><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;">ARIMA
+models such as those described above are easy to implement on a spreadsheet.
+The prediction equation is simply a linear equation that refers to past values
+of original time series and past values of the errors. Thus, you can set up an
+ARIMA forecasting spreadsheet by storing the data in column A, the forecasting
+formula in column B, and the errors (data minus forecasts) in column C. The
+forecasting formula in a typical cell in column B would simply be a linear
+expression referring to values in preceding rows of columns A and C, multiplied
+by the appropriate AR or MA coefficients stored in cells elsewhere on the
+spreadsheet. </span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<p><span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><a href="http://people.duke.edu/~rnau/411arim2.htm">Go to next topic: Identifying the order of differencing</a>
+</span><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+var sc_project=9813276; 
+var sc_invisible=1; 
+var sc_security="05193237"; 
+var sc_https=1; 
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script><script type="text/javascript" src="./Introduction to ARIMA models_files/counter.js"></script>
+<noscript>&lt;div class="statcounter"&gt;&lt;a title="shopify
+analytics tool" href="http://statcounter.com/shopify/"
+target="_blank"&gt;&lt;img class="statcounter"
+src="http://c.statcounter.com/9813276/0/05193237/1/"
+alt="shopify analytics tool"&gt;&lt;/a&gt;&lt;/div&gt;</noscript>
+<!-- End of StatCounter Code for Default Guide -->
+
+
+
+</div><div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_http" frameborder="0" allowtransparency="true" scrolling="no" id="fb_xdm_frame_http" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="./Introduction to ARIMA models_files/rFG58m7xAig.html" style="border: none;"></iframe><iframe name="fb_xdm_frame_https" frameborder="0" allowtransparency="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="./Introduction to ARIMA models_files/rFG58m7xAig(1).html" style="border: none;"></iframe></div></div></div><div id="feedly-mini" title="feedly Mini tookit"></div></body></html>
