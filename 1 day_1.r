@@ -28,16 +28,33 @@ time.vec <- strptime(solar.df$time, '%m/%d/%Y %H:%M', tz='GMT')
 # convert data to a time series using xts
 solar.xts <- xts(solar.df$avg, order.by=time.vec)
 
-# print time series
-head(solar.xts)
-head(time(solar.xts))
-
 # plot time series
 plot(solar.xts,ylab="avg")
 
 
 # 5. ARIMA forecasting
 ################################################################################
+temp<- data.frame(matrix(0, ncol = 2))
+solar.daily.xts <- apply.daily(solar.xts, sum)
+solar.daily.xts<-solar.daily.xts[1:365,]
+solar.daily <- ts(solar.daily.xts, frequency=7)
+curr<-1
+for(i in 1:5)
+{
+ 
+  solar.daily2 <- window(solar.daily,  start=c(i, 1),  end=c(i+4,7))
+  sarima.fit <- Arima(solar.daily2, order=c(2,1,0), seasonal=c(1,1,0))
+  
+  sarima.fcst <- forecast(sarima.fit, h=7)
+  plot(sarima.fcst)
+  d= as.data.frame(sarima.fcst)
+  d=d[,1]
+  d=t(d)
+  temp[curr:curr+6,1]<-d$Point
+  temp[curr:curr+6,2]<-d$Forecast
+  curr<-curr+7
+  lines(window(solar.daily, start=c(i+5,1), end=c(i+5,7)), col='red')
+}
 
 ################################################################################
 # A.
